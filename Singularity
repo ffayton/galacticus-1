@@ -16,34 +16,36 @@ Stage: build
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     yum -y update &&\
-    yum -y install vim wget make tar gzip bzip2
-
+    yum -y install vim wget make tar gzip bzip2 gsl
+    yum install centos-release-scl
+    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    scl enable devtoolset-8 -- bash
     # Must install latest version of gcc from source
-	cd /opt &&\
-    wget ftp://ftp.gnu.org/gnu/gcc/gcc-8.2.0/gcc-8.2.0.tar.gz &&\
-    tar xvfz gcc-8.2.0.tar.gz &&\
-	cd gcc-8.2.0 &&\
-	./contrib/download_prerequisites &&\
-	sed -i~ -r s/"gfc_internal_error \(\"new_symbol\(\): Symbol name too long\"\);"/"printf \(\"new_symbol\(\): Symbol name too long\"\);"/ gcc/fortran/symbol.c
-
-	yum install -y gcc-c++
-	cd /opt &&\
-    mkdir gcc-8.2.0-build &&\
-    cd gcc-8.2.0-build &&\
-    ../gcc-8.2.0/configure --prefix=$INSTALL_PATH --enable-languages=c,c++,fortran --disable-multilib &&\
-    make &&\
-    make install
+#	cd /opt &&\
+#    wget ftp://ftp.gnu.org/gnu/gcc/gcc-8.2.0/gcc-8.2.0.tar.gz &&\
+#    tar xvfz gcc-8.2.0.tar.gz &&\
+#	cd gcc-8.2.0 &&\
+#	./contrib/download_prerequisites &&\
+#	sed -i~ -r s/"gfc_internal_error \(\"new_symbol\(\): Symbol name too long\"\);"/"printf \(\"new_symbol\(\): Symbol name too long\"\);"/ gcc/fortran/symbol.c
+#
+#	yum install -y gcc-c++
+#	cd /opt &&\
+#    mkdir gcc-8.2.0-build &&\
+#    cd gcc-8.2.0-build &&\
+#    ../gcc-8.2.0/configure --prefix=$INSTALL_PATH --enable-languages=c,c++,fortran --disable-multilib &&\
+#    make &&\
+#    make install
 
 	# install GSL v1.15 
-	yum install -y texinfo
-	cd /opt &&\
-    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz &&\
-    tar xvfz gsl-1.15.tar.gz &&\
-    cd gsl-1.15 &&\
-    ./configure --prefix=$INSTALL_PATH --disable-static &&\
-	make &&\
-	make check &&\
-	make install
+#	yum install -y texinfo
+#	cd /opt &&\
+#    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz &&\
+#    tar xvfz gsl-1.15.tar.gz &&\
+#    cd gsl-1.15 &&\
+#    ./configure --prefix=$INSTALL_PATH --disable-static &&\
+#	make &&\
+#	make check &&\
+#	make install
 	
 	# install FGSL v0.9.4
 	cd /opt &&\
@@ -144,6 +146,9 @@ Stage: final
     # install system libraries that are needed at runtime
     yum -y update &&\
     yum -y install vim wget patch gcc-gfortran
+    yum install centos-release-scl
+    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    scl enable devtoolset-8 -- bash
 
     # download datasets    
     cd /usr/local &&\
