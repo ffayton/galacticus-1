@@ -15,6 +15,7 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    mkdir /usr/local
     yum -y update 
     yum -y install vim wget make tar gzip bzip2 gsl hg mercurial
     yum install centos-release-scl
