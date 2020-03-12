@@ -1,5 +1,7 @@
-Bootstrap: library
-From: centos:6
+Bootstrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+Include: yum
 Stage: build
 
 %environment
@@ -149,7 +151,7 @@ Stage: build
 
 # Install binary into final image
 Bootstrap: library
-From: centos:6
+From: centos:latest
 Stage: final
 
 %environment
@@ -169,7 +171,7 @@ Stage: final
     tar xvfz galacticus_datasets.tar.gz -C galacticus_datasets --strip-components 1
     yum install -y git
 
-%files from devel
+%files from build
     # copy the full installation directory, including the executable
 	/usr/local/galacticus /usr/local/galacticus 
 
