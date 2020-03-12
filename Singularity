@@ -1,11 +1,8 @@
-Bootstrap: yum
-OSVersion: 6
-MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-Include: yum
+Bootstrap: library
+From: centos:6
 Stage: build
 
 %environment
-    export LISTEN_PORT=12345
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
     export PATH=$INSTALL_PATH:$PATH
@@ -150,23 +147,23 @@ Stage: build
 	#    cd libmatheval-1.1.10 &&\
 	#    ./configure --prefix=$INSTALL_PATH/
 
-    # Install binary into final image
-    Bootstrap: library
-    From: centos:6
-    Stage: final
+# Install binary into final image
+Bootstrap: library
+From: centos:6
+Stage: final
 
 %environment
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
-	# setup for running
+    # setup for running
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
     export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
 %post
-	# install system libraries that are needed at runtime
-	yum -y update &&\
+    # install system libraries that are needed at runtime
+    yum -y update &&\
     yum -y install vim wget patch gcc-gfortran
 
-	# download datasets    
-	cd /usr/local &&\
+    # download datasets    
+    cd /usr/local &&\
     wget https://bitbucket.org/galacticusdev/datasets/get/default.tar.gz -O galacticus_datasets.tar.gz &&\
     mkdir galacticus_datasets &&\
     tar xvfz galacticus_datasets.tar.gz -C galacticus_datasets --strip-components 1
