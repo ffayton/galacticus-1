@@ -16,7 +16,7 @@ Stage: build
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     yum -y update &&\
-    yum -y install vim wget make 
+    yum -y install vim wget make tar gzip bzip2
 
     # Must install latest version of gcc from source
 	cd /opt &&\
@@ -97,33 +97,14 @@ Stage: build
     cp bin/* /usr/local/bin/.
 
 	# install Perl modules
-	yum install -y expat-devel
-	yum install -y perl &&\
-    yum install -y cpan
-	cpan -i YAML
-	cpan -i Cwd
-	cpan -i DateTime
-	cpan -i Data::Dumper
-	cpan -i File::Copy
-	cpan -i File::Slurp
-	cpan -i LaTeX::Encode
-	cpan -i NestedMap
-	cpan -i Scalar::Util
-	cpan -i Term::ANSIColor
-	cpan -i Text::Table
-	cpan -i XML::SAX::ParserFactory
-	cpan -i XML::Simple
-	cpan -i XML::Validator::Schema
-	cpan -i Sort::Topological
-	cpan -i Text::Template
-	cpan -i List::Uniq
-	cpan -i XML::SAX::Expat
-	cpan -i XML::Simple
-	cpan -i DateTime
-	cpan -i Regexp::Common
-	cpan -i File::Next
-	cpan -i XML::Validator::Schema
-	cpan -i List::MoreUtils
+	yum install -y expat-devel perl-XML* \
+        cpanm gcc perl perl-App-cpanminus perl-Config-Tiny \
+	perl-YAML perl-Cwd perl-DateTime \
+	perl-File* perl-LaTeX-Encode perl-NestedMap perl-Scalar-Util \
+	perl-Data-Dumper perl-Term-ANSIColor \
+	perl-Text-Table perl-Sort-Topological perl-Text-Template \
+	perl-Sort-Topological perl-List-Uniq perl-Regexp-Common \
+	perl-XML-Validator-Schema perl-List-MoreUtils
 
 	# install Galacticus
 	yum install -y patch zlib-devel
