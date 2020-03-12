@@ -133,53 +133,10 @@ echo "Here we go 3"
 	#    tar xvfz libmatheval-1.1.10.tar.gz 
 	#    cd libmatheval-1.1.10 
 	#    ./configure --prefix=$INSTALL_PATH/
-
-# Install binary into final image
-Bootstrap: library
-From: centos:latest
-Stage: final
-
-%environment
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
-    # setup for running
-    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
-    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
-%post
-    # install system libraries that are needed at runtime
-    yum -y update 
-    yum -y install vim wget patch gcc-gfortran
-    yum install centos-release-scl
-    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
-    scl enable devtoolset-8 -- bash
-
-    # download datasets    
-    cd /usr/local 
-    wget https://bitbucket.org/galacticusdev/datasets/get/default.tar.gz -O galacticus_datasets.tar.gz 
-    mkdir galacticus_datasets 
-    tar xvfz galacticus_datasets.tar.gz -C galacticus_datasets --strip-components 1
-    yum install -y git
-
-%files from build
-    # copy the full installation directory, including the executable
-	/usr/local/galacticus /usr/local/galacticus 
-
-	# copy dynamically linked libraries
-	/usr/local/lib64 /usr/local/lib64
-	/usr/lib64 /usr/lib64
-	/usr/local/lib /usr/local/lib
-
-	# copy parameters template
-	#COPY parameters/quickTest.xml /usr/local/galacticus/parameters/quickTest.xml
-	/usr/local/galacticus/parameters/ /usr/local/galacticus/parameters/
-
-	# script to execute the model with input arguments
-	/usr/local/galacticus/scripts/run_galacticus.sh /usr/local/galacticus/run_galacticus.sh
-
 %runscript
     echo "Container was created $NOW"
     echo "Arguments received: $*"
     exec echo "$@"
-    /usr/local/galacticus/run_galacticus.sh
 
 %startscript
     nc -lp $LISTEN_PORT
@@ -198,3 +155,44 @@ Stage: final
 
 %help
     This is demo container used for Galacticus.
+
+# Install binary into final image
+Bootstrap: library
+From: centos:latest
+Stage: final
+
+%environment
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    # setup for running
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
+%post
+    # install system libraries that are needed at runtime
+    mkdir -p /usr/local/galacticus
+    yum -y update 
+    yum -y install vim wget patch gcc-gfortran
+    yum install centos-release-scl
+    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    scl enable devtoolset-8 -- bash
+
+    # download datasets    
+    
+
+%files from build
+    # copy the full installation directory, including the executable
+	/usr/local/galacticus /usr/local/galacticus 
+
+	# copy dynamically linked libraries
+	/usr/local/lib64 /usr/local/lib64
+	/usr/lib64 /usr/lib64
+	/usr/local/lib /usr/local/lib
+
+	# copy parameters template
+	#COPY parameters/quickTest.xml /usr/local/galacticus/parameters/quickTest.xml
+	/usr/local/galacticus/parameters/ /usr/local/galacticus/parameters/
+
+	# script to execute the model with input arguments
+	/usr/local/galacticus/scripts/run_galacticus.sh /usr/local/galacticus/run_galacticus.sh
+
+
+
