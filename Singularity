@@ -21,6 +21,8 @@ Stage: build
     yum install centos-release-scl
     yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
     scl enable devtoolset-8 -- bash
+    
+    echo "Here we go 1"
     # Must install latest version of gcc from source
 #	cd /opt &&\
 #    wget ftp://ftp.gnu.org/gnu/gcc/gcc-8.2.0/gcc-8.2.0.tar.gz &&\
@@ -58,8 +60,7 @@ Stage: build
     make test 
     make install
 
-	# install fortran
-	yum install -y gcc-gfortran
+echo "Here we go 2"
 
 	# install HDF5 v1.8.20
 	cd /opt 
@@ -112,7 +113,7 @@ Stage: build
 	# install Galacticus
 	yum install -y patch zlib-devel
 	yum install -y mercurial openssh-clients
-
+echo "Here we go 3"
 	cd /usr/local 
     hg clone https://hg@bitbucket.org/galacticusdev/galacticus 
     cd galacticus 
@@ -121,7 +122,7 @@ Stage: build
 
 	#ln -s /usr/lib64/libblas.so.3 /usr/lib64/libblas.so
 
-	cd /usr/local/galacticus 
+	#cd /usr/local/galacticus 
     export GALACTICUS_EXEC_PATH=`pwd` 
     make Galacticus.exe   
 
