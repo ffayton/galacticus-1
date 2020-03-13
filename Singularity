@@ -20,7 +20,7 @@ Stage: build
     ls -lrt /
     yum -y update
     yum -y install epel-release
-    yum -y install perl perl-Apps-cpanminus
+    yum -y install perl perl-App-cpanminus
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
         file expat-devel perl-XML* patch \
