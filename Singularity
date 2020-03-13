@@ -7,94 +7,106 @@ Stage: build
 %environment
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
-    export PATH=$INSTALL_PATH:$PATH
+    export PATH=/usr/local:$PATH
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64
     export PERL_MM_USE_DEFAULT=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
 
+
 %post
+
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     ls -lrt /
     yum -y update
     yum -y install epel-release
+    yum -y install perl perl-Apps-cpanminus
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
-    	mercurial openssh-clientsblas blas-devel lapack gcc-c++
-    # install Perl modules
-    yum install -y expat-devel perl-XML* \
-        cpanm gcc perl perl-App-cpanminus perl-Config-Tiny \
-	perl-YAML perl-Cwd perl-DateTime \
-	perl-File* perl-LaTeX-Encode perl-NestedMap perl-Scalar-Util \
-	perl-Data-Dumper perl-Term-ANSIColor \
-	perl-Text-Table perl-Sort-Topological perl-Text-Template \
-	perl-Sort-Topological perl-List-Uniq perl-Regexp-Common \
-	perl-XML-Validator-Schema perl-List-MoreUtils \
-	patch zlib-devel mercurial openssh-clients
+    	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
+        file expat-devel perl-XML* patch \
+        zlib-devel gcc mercurial openssh-clients \
+    cpanm -i Config::Tiny YAML Cwd DateTime \
+	LaTeX::Encode NestedMap Scalar::Util \
+	Data::Dumper Term::ANSIColor \
+	Text::Table Sort::Topological Text::Template \
+	Sort::Topological List::Uniq Regexp::Common \
+	XML::Validator::Schema List::MoreUtils
+
     yum install -y centos-release-scl
-    yum install -y devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    yum install -y devtoolset-8-gcc devtoolset-8-gcc-c++
     scl enable devtoolset-8 -- bash
-    
+
+    # install GFortran
+    cd /usr/local
+    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
+    tar xvfJ gcc-10-20200308.tar.xz
+    export PATH=/usr/local/gcc-10/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    echo CHECKING WHICH GFORTRAN
+    which gfortran
+    gfortran -v
+
     # install GSL v1.15
-    cd /opt 
-    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz 
-    tar xvfz gsl-1.15.tar.gz 
-    cd gsl-1.15 
-    ./configure --prefix=$INSTALL_PATH --disable-static 
-    make 
-    make check 
+    cd /opt
+    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
+    tar xvfz gsl-1.15.tar.gz
+    cd gsl-1.15
+    ./configure --prefix=/usr/local --disable-static
+    make
+    make check
     make install
-	
+
     # install FGSL v0.9.4
-    cd /opt 
-    wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz 
+    cd /opt
+    wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
     tar -vxzf fgsl-0.9.4.tar.gz
-    cd fgsl-0.9.4 
-    ./configure --gsl $INSTALL_PATH --f90 gfortran --prefix $INSTALL_PATH 
-    make 
-    make test 
+    cd fgsl-0.9.4
+    ./configure --gsl /usr/local --f90 gfortran --prefix /usr/local
+    make
+    make test
     make install
-    
+
     # install HDF5 v1.8.20
-    cd /opt 
+    cd /opt
     wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar.gz
-    tar -vxzf hdf5-1.8.20.tar.gz 
-    cd hdf5-1.8.20 
-    F9X=gfortran ./configure --prefix=$INSTALL_PATH --enable-fortran --enable-production 
-    make 
-    make install
-    
-    # install FoX v4.1.0
-    cd /opt 
-    wget https://github.com/andreww/fox/archive/4.1.0.tar.gz 
-    tar xvfz 4.1.0.tar.gz 
-    cd fox-4.1.0 
-    FC=gfortran ./configure 
-    make 
-    make install
-    
-    # install FFTW 3.3.4 (optional)
-    cd /opt 
-    wget ftp://ftp.fftw.org/pub/fftw/fftw-3.3.4.tar.gz 
-    tar xvfz fftw-3.3.4.tar.gz 
-    cd fftw-3.3.4 
-    ./configure --prefix=$INSTALL_PATH 
+    tar -vxzf hdf5-1.8.20.tar.gz
+    cd hdf5-1.8.20
+    F9X=gfortran ./configure --prefix=/usr/local --enable-fortran --enable-production
     make
     make install
-    
+
+    # install FoX v4.1.0
+    cd /opt
+    wget https://github.com/andreww/fox/archive/4.1.0.tar.gz
+    tar xvfz 4.1.0.tar.gz
+    cd fox-4.1.0
+    FC=gfortran ./configure
+    make
+    make install
+
+    # install FFTW 3.3.4 (optional)
+    cd /opt
+    wget ftp://ftp.fftw.org/pub/fftw/fftw-3.3.4.tar.gz
+    tar xvfz fftw-3.3.4.tar.gz
+    cd fftw-3.3.4
+    ./configure --prefix=/usr/local
+    make
+    make install
+
     # install ANN 1.1.2 (optional)
-    cd /opt 
-    wget http://www.cs.umd.edu/~mount/ANN/Files/1.1.2/ann_1.1.2.tar.gz 
-    tar xvfz ann_1.1.2.tar.gz 
-    cd ann_1.1.2 
-    make linux-g++  
+    cd /opt
+    wget http://www.cs.umd.edu/~mount/ANN/Files/1.1.2/ann_1.1.2.tar.gz
+    tar xvfz ann_1.1.2.tar.gz
+    cd ann_1.1.2
+    make linux-g++
     cp bin/* /usr/local/bin/.
-    
+
     # install Galacticus
     cd /usr/local
-    hg clone https://hg@bitbucket.org/galacticusdev/galacticus
+    git clone https://github.com/galacticusorg/galacticus.git
     cd galacticus
-    hg pull && hg update workflow
-    export GALACTICUS_EXEC_PATH=`pwd` 
+    git pull
+    export GALACTICUS_EXEC_PATH=`pwd`
     make Galacticus.exe
 
 %labels
