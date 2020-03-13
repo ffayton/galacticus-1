@@ -32,10 +32,6 @@ Stage: build
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
 
-    yum install -y centos-release-scl
-    yum install -y devtoolset-8-gcc devtoolset-8-gcc-c++
-    scl enable devtoolset-8 -- bash
-
     # install GFortran
     cd /usr/local
     wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
