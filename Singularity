@@ -21,7 +21,7 @@ Stage: build
     yum -y install perl perl-App-cpanminus
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
-        file expat-devel perl-XML* patch \
+        file expat-devel perl-XML* patch gmp gmp-devel \
         zlib-devel gcc mercurial openssh-clients gsl gsl-devel
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
@@ -31,16 +31,7 @@ Stage: build
 	XML::Validator::Schema List::MoreUtils \
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
-	
-    # install GMP
-    cd /opt
-    wget https://gcc.gnu.org/pub/gcc/infrastructure/gmp-6.1.0.tar.bz2
-    tar xjvf gmp-6.1.0.tar.bz2
-    cd gmp-6.1.0
-    ./configure --prefix=/usr/local --with-gmp-prefix=/usr/local
-    make 
-    make install
-    
+
     # install ISL
     cd /opt
     wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
