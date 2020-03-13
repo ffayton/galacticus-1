@@ -22,7 +22,7 @@ Stage: build
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
         file expat-devel perl-XML* patch gmp gmp-devel \
-        zlib-devel gcc mercurial openssh-clients gsl gsl-devel
+        zlib-devel gcc mercurial openssh-clients
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
 	Data::Dumper Term::ANSIColor \
@@ -51,15 +51,15 @@ Stage: build
     which gfortran
     gfortran -v
 
-    # install GSL v1.15
-    # cd /opt
-    # wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
-    # tar xvfz gsl-1.15.tar.gz
-    # cd gsl-1.15
-    # ./configure --prefix=/usr/local --disable-static
-    # make
-    # make check
-    # make install
+    install GSL v1.15
+    cd /opt
+    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
+    tar xvfz gsl-1.15.tar.gz
+    cd gsl-1.15
+    ./configure --prefix=/usr/local --disable-static
+    make
+    make check
+    make install
 
     # install FGSL v0.9.4
     cd /opt
