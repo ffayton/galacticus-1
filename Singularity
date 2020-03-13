@@ -41,7 +41,7 @@ Stage: build
     make 
     make install
     
-    install GSL v1.15
+    #install GSL v1.15
     cd /opt
     wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
     tar xvfz gsl-1.15.tar.gz
