@@ -31,16 +31,6 @@ Stage: build
 	XML::Validator::Schema List::MoreUtils \
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
-	
-    # install GFortran
-    cd /usr/local
-    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
-    tar xvfJ gcc-10-20200308.tar.xz
-    export PATH=/usr/local/gcc-10/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
-    echo CHECKING WHICH GFORTRAN
-    which gfortran
-    gfortran -v
 
     # install ISL
     cd /opt
@@ -105,6 +95,16 @@ Stage: build
     cd ann_1.1.2
     make linux-g++
     cp bin/* /usr/local/bin/.
+    
+    # install GFortran
+    cd /usr/local
+    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
+    tar xvfJ gcc-10-20200308.tar.xz
+    export PATH=/usr/local/gcc-10/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    echo CHECKING WHICH GFORTRAN
+    which gfortran
+    gfortran -v
     
     # install Galacticus
     cd /usr/local
