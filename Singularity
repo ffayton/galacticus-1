@@ -91,6 +91,11 @@ Stage: build
     cd ann_1.1.2 
     make linux-g++  
     cp bin/* /usr/local/bin/.
+    
+    # install Galacticus
+    cd /usr/local/galacticus 
+    export GALACTICUS_EXEC_PATH=`pwd` 
+    make Galacticus.exe
 
 %labels
     Author ffayton@carnegiescience.edu
