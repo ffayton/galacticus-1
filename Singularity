@@ -15,7 +15,7 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    yum -y update 
+     
 
 
 %labels
