@@ -21,9 +21,10 @@ Stage: build
     ls -lrt /
     yum -y update
     yum -y install epel-release
-    yum -y install vim wget make tar gzip bzip2 gsl 
-    	# install Perl modules
-	yum install -y expat-devel perl-XML* \
+    yum -y install vim wget make tar gzip bzip2 gsl \
+    	mercurial openssh-clientsblas blas-devel lapack
+    # install Perl modules
+    yum install -y expat-devel perl-XML* \
         cpanm gcc perl perl-App-cpanminus perl-Config-Tiny \
 	perl-YAML perl-Cwd perl-DateTime \
 	perl-File* perl-LaTeX-Encode perl-NestedMap perl-Scalar-Util \
