@@ -15,6 +15,11 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    yum -y update 
+    yum -y install vim wget make tar gzip bzip2 gsl hg mercurial
+    yum install centos-release-scl
+    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    scl enable devtoolset-8 -- bash
 
 %labels
     Author ffayton@carnegiescience.edu
