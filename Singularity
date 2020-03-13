@@ -22,7 +22,7 @@ Stage: build
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
         file expat-devel perl-XML* patch gmp gmp-devel \
-        zlib-devel gcc mercurial openssh-clients
+        zlib-devel gcc mercurial openssh-clients gfortran
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
 	Data::Dumper Term::ANSIColor \
@@ -51,16 +51,6 @@ Stage: build
     make check
     make install
     
-    # install GFortran
-    cd /usr/local
-    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
-    tar xvfJ gcc-10-20200308.tar.xz
-    export PATH=/usr/local/gcc-10/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
-    echo CHECKING WHICH GFORTRAN
-    which gfortran
-    gfortran -v
-
     # install FGSL v0.9.4
     cd /opt
     wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
@@ -70,6 +60,16 @@ Stage: build
     make
     make test
     make install
+    
+    # install GFortran
+    cd /usr/local
+    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
+    tar xvfJ gcc-10-20200308.tar.xz
+    export PATH=/usr/local/gcc-10/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    echo CHECKING WHICH GFORTRAN
+    which gfortran
+    gfortran -v
 
     # install HDF5 v1.8.20
     cd /opt
