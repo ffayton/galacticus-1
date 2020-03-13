@@ -37,17 +37,16 @@ Stage: build
     wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
     tar xjvf isl-0.15.tar.bz2
     cd isl-0.15
-    ./configure --prefix=/usr/local 
+    ./configure --prefix=/usr/local --with-gmp-prefix=/usr/local
     make 
     make install
-    
     
     # install GFortran
     cd /usr/local
     wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
     tar xvfJ gcc-10-20200308.tar.xz
     export PATH=/usr/local/gcc-10/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
     echo CHECKING WHICH GFORTRAN
     which gfortran
     gfortran -v
