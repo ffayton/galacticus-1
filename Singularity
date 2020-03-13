@@ -12,9 +12,7 @@ Stage: build
     export PERL_MM_USE_DEFAULT=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
 
-
 %post
-
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     ls -lrt /
@@ -24,7 +22,7 @@ Stage: build
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
         file expat-devel perl-XML* patch \
-        zlib-devel gcc mercurial openssh-clients
+        zlib-devel gcc mercurial openssh-clients gsl gsl-devel
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
 	Data::Dumper Term::ANSIColor \
@@ -49,14 +47,14 @@ Stage: build
     gfortran -v
 
     # install GSL v1.15
-    cd /opt
-    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
-    tar xvfz gsl-1.15.tar.gz
-    cd gsl-1.15
-    ./configure --prefix=/usr/local --disable-static
-    make
-    make check
-    make install
+    # cd /opt
+    # wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
+    # tar xvfz gsl-1.15.tar.gz
+    # cd gsl-1.15
+    # ./configure --prefix=/usr/local --disable-static
+    # make
+    # make check
+    # make install
 
     # install FGSL v0.9.4
     cd /opt
