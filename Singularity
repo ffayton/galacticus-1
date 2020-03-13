@@ -4,9 +4,6 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 Stage: build
 
-%files
-    / /usr/local/galacticus
-
 %environment
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
@@ -33,8 +30,8 @@ Stage: build
 	perl-Sort-Topological perl-List-Uniq perl-Regexp-Common \
 	perl-XML-Validator-Schema perl-List-MoreUtils \
 	patch zlib-devel mercurial openssh-clients
-    yum install centos-release-scl
-    yum install devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
+    yum install -y centos-release-scl
+    yum install -y devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-gcc-gfortran
     scl enable devtoolset-8 -- bash
     
     # install GSL v1.15
@@ -93,7 +90,10 @@ Stage: build
     cp bin/* /usr/local/bin/.
     
     # install Galacticus
-    cd /usr/local/galacticus 
+    cd /usr/local
+    hg clone https://hg@bitbucket.org/galacticusdev/galacticus
+    cd galacticus
+    hg pull && hg update workflow
     export GALACTICUS_EXEC_PATH=`pwd` 
     make Galacticus.exe
 
