@@ -32,12 +32,21 @@ Stage: build
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
 	
+    # install GMP
+    cd /opt
+    wget https://gcc.gnu.org/pub/gcc/infrastructure/gmp-6.1.0.tar.bz2
+    tar xjvf gmp-6.1.0.tar.bz2
+    cd gmp-6.1.0
+    ./configure --prefix=/usr/local --with-gmp-prefix=/usr/local
+    make 
+    make install
+    
     # install ISL
     cd /opt
     wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
     tar xjvf isl-0.15.tar.bz2
     cd isl-0.15
-    ./configure --prefix=/usr/local
+    ./configure --prefix=/usr/local 
     make 
     make install
     
