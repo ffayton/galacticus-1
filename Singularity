@@ -16,22 +16,6 @@ Stage: build
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 
-%runscript
-    echo "Container was created $NOW"
-    echo "Arguments received: $*"
-    exec echo "$@"
-
-%startscript
-    nc -lp $LISTEN_PORT
-
-%test
-    grep -q NAME=\"CentOS\" /etc/os-release
-    if [ $? -eq 0 ]; then
-        echo "Container base is CentOS as expected."
-    else
-        echo "Container base is not CentOS."
-    fi
-
 %labels
     Author ffayton@carnegiescience.edu
     Version v0.0.1
