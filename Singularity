@@ -31,7 +31,17 @@ Stage: build
 	XML::Validator::Schema List::MoreUtils \
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
-
+	
+    # install ISL
+    cd /opt
+    wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
+    tar xjvf isl-0.15.tar.bz2
+    cd isl-0.15
+    ./configure --prefix=/usr/local
+    make 
+    make install
+    
+    
     # install GFortran
     cd /usr/local
     wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
