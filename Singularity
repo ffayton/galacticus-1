@@ -109,10 +109,38 @@ Stage: build
     # install Galacticus
     cd /usr/local
     git clone https://github.com/galacticusorg/galacticus.git
-    cd galacticus
-    git pull
-    export GALACTICUS_EXEC_PATH=`pwd`
-    make Galacticus.exe
+    git clone https://github.com/galacticusorg/datasets.git
+    cd /usr/local/galacticus 
+    make -j2 Galacticus.exe
+    
+# Install binary into final image
+Bootstrap: library
+From: centos:latest
+Stage: final
+
+%environment
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
+%post
+    # install system libraries that are needed at runtime
+    yum -y update 
+    
+%files from build
+    # copy the full installation directory, including the executable
+    /usr/local/galacticus /usr/local/galacticus 
+    
+    # copy dynamically linked libraries
+    /usr/local/lib64 /usr/local/lib64
+    /usr/lib64 /usr/lib64
+    /usr/local/lib /usr/local/lib
+    
+    # copy parameters template
+    #COPY parameters/quickTest.xml /usr/local/galacticus/parameters/quickTest.xml
+    /usr/local/galacticus/parameters/ /usr/local/galacticus/parameters/
+    
+    # script to execute the model with input arguments
+    /usr/local/galacticus/scripts/run_galacticus.sh /usr/local/galacticus/run_galacticus.sh
 
 %labels
     Author ffayton@carnegiescience.edu
