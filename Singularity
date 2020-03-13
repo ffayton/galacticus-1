@@ -31,6 +31,16 @@ Stage: build
 	XML::Validator::Schema List::MoreUtils \
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
+	
+    # install GFortran
+    cd /usr/local
+    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
+    tar xvfJ gcc-10-20200308.tar.xz
+    export PATH=/usr/local/gcc-10/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    echo CHECKING WHICH GFORTRAN
+    which gfortran
+    gfortran -v
 
     # install ISL
     cd /opt
@@ -95,16 +105,6 @@ Stage: build
     cd ann_1.1.2
     make linux-g++
     cp bin/* /usr/local/bin/.
-
-    # install FGSL v0.9.4
-    cd /opt
-    wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
-    tar -vxzf fgsl-0.9.4.tar.gz
-    cd fgsl-0.9.4
-    ./configure --gsl /usr/local --f90 gfortran --prefix /usr/local
-    make
-    make test
-    make install
     
     # install Galacticus
     cd /usr/local
