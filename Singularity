@@ -41,16 +41,6 @@ Stage: build
     make 
     make install
     
-    # install GFortran
-    cd /usr/local
-    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
-    tar xvfJ gcc-10-20200308.tar.xz
-    export PATH=/usr/local/gcc-10/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
-    echo CHECKING WHICH GFORTRAN
-    which gfortran
-    gfortran -v
-
     install GSL v1.15
     cd /opt
     wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
@@ -60,6 +50,16 @@ Stage: build
     make
     make check
     make install
+    
+    # install GFortran
+    cd /usr/local
+    wget http://gfortran.meteodat.ch/download/x86_64/snapshots/gcc-10-20200308.tar.xz
+    tar xvfJ gcc-10-20200308.tar.xz
+    export PATH=/usr/local/gcc-10/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:/usr/local/gcc-10/lib:/usr/local/gcc-10/lib64:$LD_LIBRARY_PATH
+    echo CHECKING WHICH GFORTRAN
+    which gfortran
+    gfortran -v
 
     # install FGSL v0.9.4
     cd /opt
