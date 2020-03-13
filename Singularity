@@ -24,7 +24,7 @@ Stage: build
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
         file expat-devel perl-XML* patch \
-        zlib-devel gcc mercurial openssh-clients \
+        zlib-devel gcc mercurial openssh-clients
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
 	Data::Dumper Term::ANSIColor \
