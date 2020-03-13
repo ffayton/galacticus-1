@@ -4,6 +4,9 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 Stage: build
 
+%files
+    / /usr/local/galacticus
+
 %environment
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
@@ -17,7 +20,9 @@ Stage: build
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     ls -lrt /
     yum -y update
-
+    yum -y install epel-release
+    yum -y install vim wget make tar gzip bzip2 gsl hg mercurial
+   
 
 %labels
     Author ffayton@carnegiescience.edu
