@@ -21,7 +21,7 @@ Stage: build
     yum -y install perl perl-App-cpanminus
     yum -y install vim wget make tar gzip bzip2 gsl texinfo\
     	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
-        file expat-devel perl-XML* patch gmp gmp-devel \
+        file expat-devel perl-XML* patch gmp gmp-devel git \
         zlib-devel gcc mercurial openssh-clients gfortran
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
