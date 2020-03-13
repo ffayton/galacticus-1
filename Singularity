@@ -30,7 +30,9 @@ Stage: build
 	Data::Dumper Term::ANSIColor \
 	Text::Table Sort::Topological Text::Template \
 	Sort::Topological List::Uniq Regexp::Common \
-	XML::Validator::Schema List::MoreUtils
+	XML::Validator::Schema List::MoreUtils \
+	File::Copy File::Slurp File::Next XML::Simple \
+	XML::SAX::Expat XML::SAX::ParserFactory 
 
     yum install -y centos-release-scl
     yum install -y devtoolset-8-gcc devtoolset-8-gcc-c++
