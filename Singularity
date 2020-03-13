@@ -15,8 +15,6 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    yum -y update 
-    yum -y install vim wget make tar gzip bzip2 gsl hg mercurial
 
 %runscript
     echo "Container was created $NOW"
