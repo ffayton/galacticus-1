@@ -107,11 +107,13 @@ Stage: build
     gfortran -v
     
     # install Galacticus
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
     cd /usr/local
     git clone https://github.com/galacticusorg/galacticus.git
-    git clone https://github.com/galacticusorg/datasets.git
+    git clone https://github.com/galacticusorg/datasets.git galacticus_datasets
     cd /usr/local/galacticus
-    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib" >> $SINGULARITY_ENVIRONMENT
     make -j2 Galacticus.exe
     
 # Install binary into final image
