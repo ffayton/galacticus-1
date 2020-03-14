@@ -25,7 +25,7 @@ Stage: build
         zlib-devel gcc mercurial openssh-clients gfortran
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
-	Data::Dumper Term::ANSIColor File::Changes \
+	Data::Dumper Term::ANSIColor Module::New::File::Changes \
 	Text::Table Sort::Topological Text::Template \
 	Sort::Topological List::Uniq Regexp::Common \
 	XML::Validator::Schema List::MoreUtils \
