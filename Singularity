@@ -15,7 +15,6 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    ls -lrt /
     yum -y update
     yum -y install epel-release
     yum -y install perl perl-App-cpanminus
@@ -25,7 +24,7 @@ Stage: build
         zlib-devel gcc mercurial openssh-clients gfortran
     cpanm -i Config::Tiny YAML Cwd DateTime \
 	LaTeX::Encode NestedMap Scalar::Util \
-	Data::Dumper Term::ANSIColor \
+	Data::Dumper Term::ANSIColor File::Changes \
 	Text::Table Sort::Topological Text::Template \
 	Sort::Topological List::Uniq Regexp::Common \
 	XML::Validator::Schema List::MoreUtils \
@@ -110,7 +109,8 @@ Stage: build
     cd /usr/local
     git clone https://github.com/galacticusorg/galacticus.git
     git clone https://github.com/galacticusorg/datasets.git
-    cd /usr/local/galacticus 
+    cd /usr/local/galacticus
+    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib" >> $SINGULARITY_ENVIRONMENT
     make -j2 Galacticus.exe
     
 # Install binary into final image
@@ -124,6 +124,9 @@ Stage: final
     export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
 %post
     # install system libraries that are needed at runtime
+    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets" >> $SINGULARITY_ENVIRONMENT
     yum -y update 
     
 %files from build
