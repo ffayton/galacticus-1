@@ -15,6 +15,7 @@ Stage: build
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
     yum -y update
     yum -y install epel-release
     yum -y install perl perl-App-cpanminus
