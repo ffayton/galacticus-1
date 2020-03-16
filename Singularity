@@ -31,7 +31,9 @@ Stage: build
 	XML::Validator::Schema List::MoreUtils \
 	File::Copy File::Slurp File::Next XML::Simple \
 	XML::SAX::Expat XML::SAX::ParserFactory 
-	
+    sudo yum install centos-release-scl
+    sudo yum install devtoolset-8
+    scl enable devtoolset-8 bash
     
     # install GFortran
     cd /opt
