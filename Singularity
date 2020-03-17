@@ -19,16 +19,7 @@ From: ffayton/centos7_gcc10
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:usr/lib64:/usr/local/lib
     export PATH=/usr/local/bin:$PATH
-    
-    #install GSL v1.15
-    cd /opt
-    wget http://ftp.gnu.org/pub/gnu/gsl/gsl-1.15.tar.gz
-    tar xvfz gsl-1.15.tar.gz
-    cd gsl-1.15
-    ./configure --prefix=/usr/local --disable-static
-    make
-    make check
-    make install
+    yum -y install gsl-devel
     
     # install FGSL v0.9.4
     cd /opt
