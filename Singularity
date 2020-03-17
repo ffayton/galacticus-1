@@ -26,7 +26,7 @@ From: ffayton/centos7_gcc10
     wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
     tar -vxzf fgsl-0.9.4.tar.gz
     cd fgsl-0.9.4
-    ./configure --gsl /usr/local --f90 gfortran --prefix /usr/local
+    ./configure --gsl /usr --f90 gfortran --prefix /usr/local
     make
     make test
     make install
@@ -45,16 +45,7 @@ From: ffayton/centos7_gcc10
     wget https://github.com/andreww/fox/archive/4.1.0.tar.gz
     tar xvfz 4.1.0.tar.gz
     cd fox-4.1.0
-    FC=gfortran ./configure
-    make
-    make install
-
-    # install FFTW 3.3.4 (optional)
-    cd /opt
-    wget ftp://ftp.fftw.org/pub/fftw/fftw-3.3.4.tar.gz
-    tar xvfz fftw-3.3.4.tar.gz
-    cd fftw-3.3.4
-    ./configure --prefix=/usr/local
+    ./configure
     make
     make install
 
