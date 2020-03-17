@@ -4,7 +4,7 @@ From: ffayton/centos7_gcc10
 %environment
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
-    export PATH=/usr/local:$PATH
+    export PATH=/usr/local/bin:$PATH
     export PERL_MM_USE_DEFAULT=1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
