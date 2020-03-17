@@ -1,49 +1,24 @@
-Bootstrap: yum
-OSVersion: 7
-MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-Include: yum
-Stage: build
+Bootstrap: shub
+From: ffayton/centos7_gcc10
 
 %environment
     export LC_ALL=C
     export INSTALL_PATH=/usr/local
     export PATH=/usr/local:$PATH
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64
     export PERL_MM_USE_DEFAULT=1
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
 
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
+    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
+    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets" >> $SINGULARITY_ENVIRONMENT
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
-    yum -y update
-    yum -y install epel-release
-    yum -y install perl perl-App-cpanminus
-    yum -y install vim wget make tar gzip bzip2 gsl texinfo\
-    	mercurial openssh-clientsblas blas-devel lapack gcc-c++ \
-        file expat-devel perl-XML* patch gmp gmp-devel git \
-        zlib-devel gcc mercurial openssh-clients gfortran
-    cpanm -i Config::Tiny YAML Cwd DateTime \
-	LaTeX::Encode NestedMap Scalar::Util \
-	Data::Dumper Term::ANSIColor Module::New::File::Changes \
-	Text::Table Sort::Topological Text::Template \
-	Sort::Topological List::Uniq Regexp::Common \
-	XML::Validator::Schema List::MoreUtils \
-	File::Copy File::Slurp File::Next XML::Simple \
-	XML::SAX::Expat XML::SAX::ParserFactory 
-    yum -y install centos-release-scl
-    yum -y install devtoolset-8
-    scl enable devtoolset-8 bash
-    
-    # install GFortran
-    cd /opt
-    git clone git://gcc.gnu.org/git/gcc.git
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:usr/lib64:/usr/local/lib
     export PATH=/usr/local/bin:$PATH
-    cd gcc
-    ./contrib/download_prerequisites
-    ./configure --prefix=/usr/local --enable-languages=c,c++,fortran,go 
-    make -j2
-    make install 
     
     #install GSL v1.15
     cd /opt
@@ -109,22 +84,6 @@ Stage: build
     git clone https://github.com/galacticusorg/datasets.git galacticus_datasets
     cd /usr/local/galacticus
     make -j2 Galacticus.exe
-    
-# Install binary into final image
-Bootstrap: library
-From: centos:latest
-Stage: final
-
-%environment
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
-    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
-    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
-%post
-    # install system libraries that are needed at runtime
-    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
-    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
-    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets" >> $SINGULARITY_ENVIRONMENT
-    yum -y update 
     
 %files from build
     # copy the full installation directory, including the executable
