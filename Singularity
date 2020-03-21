@@ -1,4 +1,4 @@
-Bootstrap: library
+Bootstrap: ffayton
 From: gcc10:latest
 
 %environment
