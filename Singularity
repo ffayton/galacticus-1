@@ -12,6 +12,7 @@ From: ffayton/default/gcc10:latest
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     export PATH=/usr/local/bin:$PATH
     export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
+    yum install -y fftw
     
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo "GCC-10 being used to compile" ; else exit 1; fi
     
@@ -46,6 +47,15 @@ From: ffayton/default/gcc10:latest
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean 
     make
+    make install
+    
+    # install FFTW 3.3.4 (optional)
+    cd /opt 
+    wget ftp://ftp.fftw.org/pub/fftw/fftw-3.3.4.tar.gz 
+    tar xvfz fftw-3.3.4.tar.gz 
+    cd fftw-3.3.4 
+    ./configure --prefix=/usr/local
+    make -j2
     make install
 
     # install ANN 1.1.2 (optional)
