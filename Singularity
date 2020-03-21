@@ -9,6 +9,8 @@ From: ffayton/default/gcc10:latest
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
     
+    if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo "GCC-10 being used to compile" ; else exit 1; fi
+    
     # install FGSL v0.9.4
     cd /opt
     wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
@@ -25,7 +27,8 @@ From: ffayton/default/gcc10:latest
     wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar.gz
     tar -vxzf hdf5-1.8.20.tar.gz
     cd hdf5-1.8.20
-    F9X=gfortran ./configure --prefix=/usr/local --enable-fortran --enable-production
+    ./configure --prefix=/usr/local --enable-fortran --enable-production F90=gfortran FC=gfortran CC=gcc CXX=g++
+    if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean
     make
     make install
@@ -36,6 +39,7 @@ From: ffayton/default/gcc10:latest
     tar xvfz 4.1.0.tar.gz
     cd fox-4.1.0
     ./configure
+    if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean 
     make
     make install
@@ -45,6 +49,7 @@ From: ffayton/default/gcc10:latest
     wget http://www.cs.umd.edu/~mount/ANN/Files/1.1.2/ann_1.1.2.tar.gz
     tar xvfz ann_1.1.2.tar.gz
     cd ann_1.1.2
+    if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make linux-g++
     cp bin/* /usr/local/bin/
     
@@ -56,6 +61,7 @@ From: ffayton/default/gcc10:latest
     git clone https://github.com/galacticusorg/galacticus.git
     git clone https://github.com/galacticusorg/datasets.git galacticus_datasets
     cd /usr/local/galacticus
+    if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean
     make -j2 Galacticus.exe
 
