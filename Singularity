@@ -1,25 +1,13 @@
-Bootstrap: shub
-From: ffayton/centos7_gcc10
+Bootstrap: library
+From: gcc10:latest
 
 %environment
-    export LC_ALL=C
-    export INSTALL_PATH=/usr/local
-    export PATH=/usr/local/bin:$PATH
-    export PERL_MM_USE_DEFAULT=1
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
     export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
 
 %post
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:/usr/lib64:/usr/local/lib
-    export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
-    export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets" >> $SINGULARITY_ENVIRONMENT
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64:/usr/local/lib
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib64:usr/lib64:/usr/local/lib
-    export PATH=/usr/local/bin:$PATH
-    yum -y install gsl-devel
     
     # install FGSL v0.9.4
     cd /opt
@@ -66,22 +54,6 @@ From: ffayton/centos7_gcc10
     git clone https://github.com/galacticusorg/datasets.git galacticus_datasets
     cd /usr/local/galacticus
     make -j2 Galacticus.exe
-    
-%files from build
-    # copy the full installation directory, including the executable
-    /usr/local/galacticus /usr/local/galacticus 
-    
-    # copy dynamically linked libraries
-    /usr/local/lib64 /usr/local/lib64
-    /usr/lib64 /usr/lib64
-    /usr/local/lib /usr/local/lib
-    
-    # copy parameters template
-    #COPY parameters/quickTest.xml /usr/local/galacticus/parameters/quickTest.xml
-    /usr/local/galacticus/parameters/ /usr/local/galacticus/parameters/
-    
-    # script to execute the model with input arguments
-    /usr/local/galacticus/scripts/run_galacticus.sh /usr/local/galacticus/run_galacticus.sh
 
 %labels
     Author ffayton@carnegiescience.edu
