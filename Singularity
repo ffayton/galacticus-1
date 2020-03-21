@@ -20,7 +20,7 @@ From: ffayton/default/gcc10:latest
     wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
     tar -vxzf fgsl-0.9.4.tar.gz
     cd fgsl-0.9.4
-    ./configure --gsl /usr --f90 gfortran --prefix /usr/local
+    ./configure --gsl /usr --f90 /usr/local/bin/gfortran --prefix /usr/local
     make clean
     make
     make test
@@ -42,7 +42,7 @@ From: ffayton/default/gcc10:latest
     wget https://github.com/andreww/fox/archive/4.1.0.tar.gz
     tar xvfz 4.1.0.tar.gz
     cd fox-4.1.0
-    ./configure
+    ./configure --prefix=/usr/local FC=/usr/local/bin/gfortran CC=/usr/local/bin/gcc CXX=/usr/local/bin/g++ F90=/usr/local/bin/gfortran
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean 
     make
@@ -54,6 +54,7 @@ From: ffayton/default/gcc10:latest
     tar xvfz ann_1.1.2.tar.gz
     cd ann_1.1.2
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
+    export CXX=/usr/local/bin/g++
     make linux-g++
     cp bin/* /usr/local/bin/
     
