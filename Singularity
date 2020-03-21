@@ -1,5 +1,5 @@
-Bootstrap: ffayton
-From: gcc10:latest
+Bootstrap: library
+From: ffayton:gcc10
 
 %environment
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
