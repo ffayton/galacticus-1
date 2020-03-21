@@ -2,6 +2,8 @@ Bootstrap: library
 From: ffayton/default/gcc10:latest
 
 %environment
+    export PATH=/usr/local/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
     export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
 
