@@ -15,6 +15,7 @@ From: ffayton/default/gcc10:latest
     tar -vxzf fgsl-0.9.4.tar.gz
     cd fgsl-0.9.4
     ./configure --gsl /usr --f90 gfortran --prefix /usr/local
+    make clean
     make
     make test
     make install
@@ -25,6 +26,7 @@ From: ffayton/default/gcc10:latest
     tar -vxzf hdf5-1.8.20.tar.gz
     cd hdf5-1.8.20
     F9X=gfortran ./configure --prefix=/usr/local --enable-fortran --enable-production
+    make clean
     make
     make install
 
@@ -34,6 +36,7 @@ From: ffayton/default/gcc10:latest
     tar xvfz 4.1.0.tar.gz
     cd fox-4.1.0
     ./configure
+    make clean 
     make
     make install
 
@@ -53,6 +56,7 @@ From: ffayton/default/gcc10:latest
     git clone https://github.com/galacticusorg/galacticus.git
     git clone https://github.com/galacticusorg/datasets.git galacticus_datasets
     cd /usr/local/galacticus
+    make clean
     make -j2 Galacticus.exe
 
 %labels
