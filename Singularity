@@ -20,7 +20,7 @@ From: ffayton/default/gcc10:latest
     wget https://www.lrz.de/services/software/mathematik/gsl/fortran/download/fgsl-0.9.4.tar.gz
     tar -vxzf fgsl-0.9.4.tar.gz
     cd fgsl-0.9.4
-    ./configure --gsl /usr --f90 /usr/local/bin/gfortran --prefix /usr/local
+    ./configure --gsl /usr --f90 /usr/local/bin/gfortran --cc /usr/local/bin/gcc --prefix /usr/local
     make clean
     make
     make test
