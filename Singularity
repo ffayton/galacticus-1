@@ -34,7 +34,7 @@ From: ffayton/default/gcc10:latest
     ./configure --prefix=/usr/local --enable-fortran --enable-production F90=gfortran FC=gfortran CC=gcc CXX=g++
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean
-    make
+    make -j8
     make install
 
     # install FoX v4.1.0
