@@ -2,7 +2,7 @@ Bootstrap: library
 From: ffayton/default/gcc10:latest
 
 %environment
-    export PATH=/usr/local/bin:$PATH
+    export PATH=/usr/local/bin:/usr/local/galacticus:$PATH
     export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
     export GALACTICUS_EXEC_PATH=/usr/local/galacticus/
     export GALACTICUS_DATA_PATH=/usr/local/galacticus_datasets
@@ -78,11 +78,11 @@ From: ffayton/default/gcc10:latest
     cd /usr/local/galacticus
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean
-    make -j2 Galacticus.exe
+    make -j8 Galacticus.exe
 
 %labels
     Author ffayton@carnegiescience.edu
     Version v0.0.1
 
 %help
-    This is demo container used for Galacticus.
+    This is container is used to build Galacticus, https://github.com/galacticusorg/galacticus.git.
