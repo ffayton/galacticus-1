@@ -9,9 +9,11 @@ From: ffayton/default/gcc10:latest
 
 %post
     NOW=`date`
-    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-    export PATH=/usr/local/bin:$PATH
+    echo "export NOW=\"${NOW}\"
+    export PATH=/usr/local/bin:/usr/local/galacticus:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH" >> $SINGULARITY_ENVIRONMENT
     export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
+    export PATH=/usr/local/bin:/usr/local/galacticus:$PATH
     
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo "GCC-10 being used to compile" ; else exit 1; fi
     
