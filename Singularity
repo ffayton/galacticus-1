@@ -27,7 +27,7 @@ From: ffayton/default/galacticus_prebuild:latest
     cd /usr/local/galacticus
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo yes; fi
     make clean
-    make -j16 Galacticus.exe
+    make -j8 Galacticus.exe
 
 %labels
     Author ffayton@carnegiescience.edu
