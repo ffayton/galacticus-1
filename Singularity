@@ -14,6 +14,7 @@ From: ffayton/default/galacticus_prebuild:latest
     export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH" >> $SINGULARITY_ENVIRONMENT
     export LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
     export PATH=/usr/local/bin:/usr/local/galacticus:$PATH
+    cpanm -i PDL
     
     if [ "$(gfortran -dumpversion)" == "10.0.1" ] ; then echo "GCC-10 being used to compile" ; else exit 1; fi
     
