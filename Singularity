@@ -1,5 +1,5 @@
 Bootstrap: library
-From: ffayton/default/gcc10:latest
+From: ffayton/default/galacticus_prebuild
 
 %environment
     export PATH=/usr/local/bin:/usr/local/galacticus:$PATH
